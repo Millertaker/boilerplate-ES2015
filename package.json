@@ -1,0 +1,16 @@
+{
+  "name": "onlinestore",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "Express based e-commerce website  ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Millertaker",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.1",
+    "express-handlebars": "^3.0.0"
+  }
+}
