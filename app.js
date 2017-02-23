@@ -2,6 +2,7 @@
 
 let express = require('express');
 let handlebars = require('express-handlebars');
+let middleware = require('./middleware');
 
 /**
 *
@@ -21,9 +22,21 @@ app.use(express.static(__dirname + '/public'));
 *
 * Controllers
 */
-app.get('/', function(req, res, next){
-  res.render('home');
-});
+
+console.log(middleware);
+
+app.get('/',
+  function(req, res, next){
+    middleware.logHomeAccess(req, res)
+      .then(function() { next() })
+      .catch(function(error) { console.log('error to access the content') })
+  },
+  function(req, res, next){
+    middleware.renderHome(req, res)
+      .then(function() { console.log('home rendered') })
+      .catch(function(error) { console.log('error to access the content') })
+  }
+);
 
 
 /**
@@ -33,3 +46,4 @@ app.get('/', function(req, res, next){
 app.listen(app.get('port'), function(){
   console.log('running server on: ' + app.get('port'))
 });
+
