@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": "true",
   "description": "Express based e-commerce website  ",
-  "main": "app.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./test"
+    "test": "./node_modules/mocha/bin/mocha ./test",
+    "start": "node ./app/index.js"
   },
   "author": "Millertaker",
   "license": "ISC",

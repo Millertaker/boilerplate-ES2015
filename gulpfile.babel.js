@@ -5,6 +5,7 @@ import run from 'run-sequence';
 import watch from 'gulp-watch';
 import server from 'gulp-live-server';
 
+let express;
 const PATHS = {
   js: ['./src/**/*.js'],
   destination: './app'
@@ -14,10 +15,9 @@ gulp.task('default', cb => {
   run('server', 'build', 'watch', cb);
 });
 
-let express;
-
 gulp.task('server', () => {
   express = server.new(PATHS.destination);
+  express.start.bind(express);
 });
 
 gulp.task('build', cb => {
@@ -30,10 +30,11 @@ gulp.task('clean', cb => {
 
 gulp.task('babel', shell.task([
     'babel src --out-dir app'
-  ]));
+  ])
+);
 
 gulp.task('restart', () => {
-  express.start.bind(express);
+  express.start.bind(express)();
 });
 
 gulp.task('watch', () =>{
