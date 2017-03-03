@@ -1,6 +1,4 @@
-'use strict'
-
-var middleware = {
+var index = {
   renderHome: function(req, res){
     return new Promise(function(resolve, reject){
       res.render('home');
@@ -17,4 +15,4 @@ var middleware = {
 
 }
 
-module.exports = middleware;
+module.exports = index;

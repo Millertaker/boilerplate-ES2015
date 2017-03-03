@@ -8,9 +8,13 @@ var _expressHandlebars = require('express-handlebars');
 
 var _expressHandlebars2 = _interopRequireDefault(_expressHandlebars);
 
-var _middleware = require('./middleware');
+var _index = require('./controllers/index');
 
-var _middleware2 = _interopRequireDefault(_middleware);
+var _index2 = _interopRequireDefault(_index);
+
+var _users = require('./controllers/users');
+
+var _users2 = _interopRequireDefault(_users);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29,22 +33,10 @@ app.use(_express2.default.static(__dirname + '/../public'));
 
 /**
 *
-* Controllers
+* Controllers instantiation
 */
-
-app.get('/', function (req, res, next) {
-  _middleware2.default.logHomeAccess(req, res).then(() => {
-    next();
-  }).catch(error => {
-    console.log('error to access the content');
-  });
-}, function (req, res, next) {
-  _middleware2.default.renderHome(req, res).then(function () {
-    console.log('home rendered');
-  }).catch(function (error) {
-    console.log('error to access the content');
-  });
-});
+new _index2.default().init(app);
+new _users2.default().init(app);
 
 /**
 *

@@ -1,8 +1,9 @@
-'use strict'
-
 import express from 'express';
 import handlebars from 'express-handlebars';
-import middleware from './middleware';
+
+import index from './controllers/index';
+import users from './controllers/users';
+
 
 /**
 *
@@ -20,22 +21,10 @@ app.use(express.static(__dirname + '/../public'));
 
 /**
 *
-* Controllers
+* Controllers instantiation
 */
-
-app.get('/',
-  function(req, res, next){
-    middleware.logHomeAccess(req, res)
-      .then(() => { next() })
-      .catch( error => { console.log('error to access the content') })
-  },
-  function(req, res, next){
-    middleware.renderHome(req, res)
-      .then(function() { console.log('home rendered') })
-      .catch(function(error) { console.log('error to access the content') })
-  }
-);
-
+new index().init(app);
+new users().init(app);
 
 /**
 *

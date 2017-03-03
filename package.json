@@ -2,6 +2,7 @@
   "name": "onlinestore",
   "version": "1.0.0",
   "private": "true",
+  "main": "index.js",
   "description": "Express based e-commerce website  ",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha ./test",
