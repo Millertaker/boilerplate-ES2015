@@ -33,7 +33,7 @@ app.use(_express2.default.static(__dirname + '/../public'));
 
 /**
 *
-* Controllers instantiation
+* Controllers config
 */
 new _index2.default().init(app);
 new _users2.default().init(app);

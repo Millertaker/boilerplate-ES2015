@@ -21,7 +21,7 @@ app.use(express.static(__dirname + '/../public'));
 
 /**
 *
-* Controllers instantiation
+* Controllers config
 */
 new index().init(app);
 new users().init(app);
