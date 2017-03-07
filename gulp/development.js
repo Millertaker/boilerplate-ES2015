@@ -15,7 +15,6 @@ import uglify from 'gulp-uglify';
 import babel from 'gulp-babel';
 import rename from 'gulp-rename';
 import less from 'gulp-less';
-import path from 'path';
 import concat from 'gulp-concat';
 import uglifycss from 'gulp-uglifycss';
 import plumber from 'gulp-plumber';
@@ -38,7 +37,7 @@ let express;
 
 
 gulp.task('server', () => {
-  express = server.new('./app');
+  express = server.new('./server/build');
   express.start.bind(express);
 });
 
@@ -47,13 +46,14 @@ gulp.task('build', cb => {
 });
 
 gulp.task('clean', cb => {
-  rimraf('./app', cb);
+  rimraf('./server/build', cb);
 });
 
-gulp.task('babel', shell.task([
-    'babel src --out-dir app'
-  ])
-);
+gulp.task('babel', cb => {
+  gulp.src(['./server/src/**/*.js'])
+    .pipe(babel(  { presets: ['es2015-node5'] } ))
+    .pipe(gulp.dest('./server/build'));
+});
 
 gulp.task('restart', () => {
   express.start.bind(express)();
@@ -61,7 +61,7 @@ gulp.task('restart', () => {
 
 
 gulp.task('watch-be', () => {
-  gulp.watch('./src/**/*.js', () => {
+  gulp.watch('./server/src/**/*.js', () => {
     gulp.start('build');
   });
 })
