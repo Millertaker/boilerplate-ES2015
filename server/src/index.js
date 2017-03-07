@@ -13,8 +13,17 @@ import users from './controllers/users';
 let app = express();
 
 app.disable('x-powered-by');
-app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+
+app.engine('handlebars', handlebars({
+  defaultLayout: 'main',
+  partialsDir: __dirname + '/../views/partials',
+  layoutsDir: __dirname + '/../views/layouts/',
+}));
+
 app.set('view engine', 'handlebars');
+app.set('views', __dirname + '/../views');
+
+
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/../public'));
 

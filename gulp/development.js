@@ -49,11 +49,16 @@ gulp.task('clean', cb => {
   rimraf('./server/build', cb);
 });
 
-gulp.task('babel', cb => {
-  gulp.src(['./server/src/**/*.js'])
-    .pipe(babel(  { presets: ['es2015-node5'] } ))
-    .pipe(gulp.dest('./server/build'));
-});
+//gulp.task('babel', cb => {
+//  gulp.src(['./server/src/**/*.js'])
+//    .pipe(babel(  { presets: ['es2015-node5'] } ))
+//    .pipe(gulp.dest('./server/build'));
+//});
+
+gulp.task('babel', shell.task([
+    'babel ./server/src --out-dir ./server/build'
+  ])
+);
 
 gulp.task('restart', () => {
   express.start.bind(express)();

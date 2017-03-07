@@ -26,8 +26,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 let app = (0, _express2.default)();
 
 app.disable('x-powered-by');
-app.engine('handlebars', (0, _expressHandlebars2.default)({ defaultLayout: 'main' }));
+
+app.engine('handlebars', (0, _expressHandlebars2.default)({
+  defaultLayout: 'main',
+  partialsDir: __dirname + '/../views/partials',
+  layoutsDir: __dirname + '/../views/layouts/'
+}));
+
 app.set('view engine', 'handlebars');
+app.set('views', __dirname + '/../views');
+
 app.set('port', process.env.PORT || 3000);
 app.use(_express2.default.static(__dirname + '/../public'));
 
