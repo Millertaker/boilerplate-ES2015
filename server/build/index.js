@@ -36,8 +36,8 @@ app.engine('handlebars', (0, _expressHandlebars2.default)({
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/../views');
 
-app.set('port', process.env.PORT || 3000);
-app.use(_express2.default.static(__dirname + '/../public'));
+app.set('port', process.env.PORT || 8080);
+app.use(_express2.default.static(__dirname + '/../../public'));
 
 /**
 *

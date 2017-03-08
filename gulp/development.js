@@ -88,7 +88,7 @@ gulp.task('scripts', cb => {
 
 gulp.task('less', () => {
   gulp.src('./public/less/**/*.less')
-
+    //.pipe(plumber())
     .pipe(less({
       plugins: [autoprefix]
     }))
