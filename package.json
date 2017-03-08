@@ -1,5 +1,5 @@
 {
-  "name": "onlinestore",
+  "name": "Music App",
   "version": "1.0.0",
   "private": "true",
   "main": "./server/build/index.js",
