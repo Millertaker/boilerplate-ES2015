@@ -77,13 +77,13 @@ gulp.task('watch-be', () => {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 gulp.task('scripts', cb => {
-  rimraf('./public/js', cb);
+  rimraf('./public/assets/app', cb);
 
-  gulp.src(['./public/src/**/*.js', '!app/js/**/*.min.js'])
+  gulp.src(['./public/src/**/*.js', '!app/assets/**/*.min.js'])
     .pipe(concat('concat.min.js'))
     .pipe(babel(  { presets: ['es2015'] } ))
     .pipe(gulpif(globalConfig.production(),uglify()))
-    .pipe(gulp.dest('./public/js'));
+    .pipe(gulp.dest('./public/assets/app'));
 });
 
 gulp.task('less', () => {
@@ -105,7 +105,7 @@ gulp.task('less', () => {
       )
     )
 
-    .pipe(gulp.dest('./public/css'));
+    .pipe(gulp.dest('./public/assets/css'));
 });
 
 gulp.task('watch-fe', () =>{
