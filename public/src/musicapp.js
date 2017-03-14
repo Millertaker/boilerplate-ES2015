@@ -1,9 +1,9 @@
 /** TODO code goes here **/
 
 
-define(['app/components/link'], function () {
+define(['components/link'], function () {
 
-  var App = {};
+  let App = {};
 
   return App;
 });

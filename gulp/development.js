@@ -20,7 +20,7 @@ import uglifycss from 'gulp-uglifycss';
 import plumber from 'gulp-plumber';
 import LessPluginAutoPrefix from 'less-plugin-autoprefix';
 import gulpif from 'gulp-if';
-import requirejsOptimize from 'gulp-requirejs-optimize';
+import amdOptimize from 'amd-optimize';
 
 import globalConfig from './config';
 
@@ -81,16 +81,28 @@ gulp.task('scripts', cb => {
   rimraf('./public/assets/app', cb);
 
   gulp.src(['./public/src/**/*.js'])
-    //.pipe(concat('musicapp.js'))
     .pipe(babel(  { presets: ['es2015'] } ))
     .pipe(gulpif(globalConfig.production(),uglify()))
-    //.pipe(requirejsOptimize())
     .pipe(gulp.dest('./public/assets/app'));
 });
 
+gulp.task('bundle', cb => {
+  gulp.src('./public/src/**/*.js')
+    .pipe(babel(  { presets: ['es2015'] } ))
+    .pipe(amdOptimize("musicapp"))
+    .pipe(concat('musicapp.js'))
+    .pipe(gulpif(globalConfig.production(),uglify()))
+    .pipe(gulp.dest('./public/assets/app'));
+});
+
+gulp.task('clean-scripts', cb => {
+  rimraf('./public/assets/app', cb);
+});
+
+
 gulp.task('less', () => {
   gulp.src('./public/less/**/*.less')
-    //.pipe(plumber())
+    .pipe(plumber())
     .pipe(less({
       plugins: [autoprefix]
     }))
@@ -125,6 +137,10 @@ gulp.task('watch-fe', () =>{
 // Commands
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+
+gulp.task('build-code', cb => {
+  run('bundle');
+})
 
 gulp.task('development', cb => {
   run('server', 'build', 'watch-be', 'watch-fe', 'scripts', 'less', cb);

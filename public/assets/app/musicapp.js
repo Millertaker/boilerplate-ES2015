@@ -1,10 +1,13 @@
 'use strict';
-
-/** TODO code goes here **/
-
-define(['app/components/link'], function () {
-
-  var App = {};
-
-  return App;
+define('link', [], function () {
+    var Link = {};
+    return Link;
+});
+define('components/link', [], function () {
+    return;
+});
+'use strict';
+define('musicapp', ['components/link'], function () {
+    var App = {};
+    return App;
 });
