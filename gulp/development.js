@@ -20,6 +20,7 @@ import uglifycss from 'gulp-uglifycss';
 import plumber from 'gulp-plumber';
 import LessPluginAutoPrefix from 'less-plugin-autoprefix';
 import gulpif from 'gulp-if';
+import requirejsOptimize from 'gulp-requirejs-optimize';
 
 import globalConfig from './config';
 
@@ -79,10 +80,11 @@ gulp.task('watch-be', () => {
 gulp.task('scripts', cb => {
   rimraf('./public/assets/app', cb);
 
-  gulp.src(['./public/src/**/*.js', '!app/assets/**/*.min.js'])
-    .pipe(concat('concat.min.js'))
+  gulp.src(['./public/src/**/*.js'])
+    //.pipe(concat('musicapp.js'))
     .pipe(babel(  { presets: ['es2015'] } ))
     .pipe(gulpif(globalConfig.production(),uglify()))
+    //.pipe(requirejsOptimize())
     .pipe(gulp.dest('./public/assets/app'));
 });
 
