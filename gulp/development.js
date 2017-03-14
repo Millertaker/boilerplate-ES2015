@@ -7,6 +7,7 @@
 import gulp from 'gulp';
 import shell from 'gulp-shell';
 import rimraf from 'rimraf';
+import gulpRimraf from 'gulp-rimraf';
 import run from 'run-sequence';
 import watch from 'gulp-watch';
 import server from 'gulp-live-server';
@@ -21,6 +22,7 @@ import plumber from 'gulp-plumber';
 import LessPluginAutoPrefix from 'less-plugin-autoprefix';
 import gulpif from 'gulp-if';
 import amdOptimize from 'amd-optimize';
+import ignore from 'gulp-ignore';
 
 import globalConfig from './config';
 
@@ -78,13 +80,23 @@ gulp.task('watch-be', () => {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 gulp.task('scripts', cb => {
-  rimraf('./public/assets/app', cb);
+  run('cleanup-scripts', 'babelify-scripts');
+});
 
+
+gulp.task('cleanup-scripts', cb => {
+  gulp.src(['./public/assets/**/*.js'])
+    .pipe(ignore('/public/assets/vendor'))
+    .pipe(gulpRimraf());
+});
+
+gulp.task('babelify-scripts', cb => {
   gulp.src(['./public/src/**/*.js'])
     .pipe(babel(  { presets: ['es2015'] } ))
-    .pipe(gulpif(globalConfig.production(),uglify()))
     .pipe(gulp.dest('./public/assets/app'));
 });
+
+
 
 gulp.task('bundle', cb => {
   gulp.src('./public/src/**/*.js')
