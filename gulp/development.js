@@ -85,7 +85,7 @@ gulp.task('scripts', cb => {
 
 
 gulp.task('cleanup-scripts', cb => {
-  gulp.src(['./public/assets/**/*.js'])
+  gulp.src(['./public/assets/app/*.js'])
     .pipe(ignore('/public/assets/vendor'))
     .pipe(gulpRimraf());
 });
@@ -93,6 +93,7 @@ gulp.task('cleanup-scripts', cb => {
 gulp.task('babelify-scripts', cb => {
   gulp.src(['./public/src/**/*.js'])
     .pipe(babel(  { presets: ['es2015'] } ))
+    .pipe(gulpif(globalConfig.production(),uglify()))
     .pipe(gulp.dest('./public/assets/app'));
 });
 
