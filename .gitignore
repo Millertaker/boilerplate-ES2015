@@ -4,3 +4,4 @@ credentials.js
 *~
 .DS_STORE
 public/vendor
+public/assets/app/vendor
