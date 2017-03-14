@@ -3,5 +3,5 @@ node_modules
 credentials.js
 *~
 .DS_STORE
-public/vendor
+public/assets/vendor
 public/assets/app/vendor

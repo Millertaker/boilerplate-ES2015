@@ -1,11 +1,11 @@
 //config here
 
 requirejs.config({
-  baseUrl: '/assets/',
+  baseUrl: '/assets/app',
   paths: {
-    jquery: 'vendor/jquery/dist/jquery.min',
-    bootstrap: 'vendor/bootstrap/dist/js/bootstrap.min',
-    mainapp: 'app/musicapp'
+    jquery: '../vendor/jquery/dist/jquery.min',
+    bootstrap: '../vendor/bootstrap/dist/js/bootstrap.min',
+    mainapp: 'musicapp'
   },
 
   shim : {

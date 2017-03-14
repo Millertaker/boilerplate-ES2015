@@ -80,9 +80,13 @@ gulp.task('watch-be', () => {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 gulp.task('scripts', cb => {
-  run('cleanup-scripts', 'babelify-scripts');
-});
+  rimraf('./public/assets/app', cb);
 
+  gulp.src(['./public/src/**/*.js'])
+    .pipe(babel(  { presets: ['es2015'] } ))
+    .pipe(gulpif(globalConfig.production(),uglify()))
+    .pipe(gulp.dest('./public/assets/app'));
+});
 
 gulp.task('cleanup-scripts', cb => {
   gulp.src(['./public/assets/app/*.js'])
