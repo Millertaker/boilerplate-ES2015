@@ -24,7 +24,7 @@ app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/../views');
 
 
-app.set('port', process.env.PORT || 8000);
+app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/../../public'));
 
 

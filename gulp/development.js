@@ -52,12 +52,6 @@ gulp.task('clean', cb => {
   rimraf('./server/build', cb);
 });
 
-//gulp.task('babel', cb => {
-//  gulp.src(['./server/src/**/*.js'])
-//    .pipe(babel(  { presets: ['es2015-node5'] } ))
-//    .pipe(gulp.dest('./server/build'));
-//});
-
 gulp.task('babel', shell.task([
     'babel ./server/src --out-dir ./server/build'
   ])
@@ -80,9 +74,11 @@ gulp.task('watch-be', () => {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 gulp.task('scripts', cb => {
-  run('clean-scripts', 'babelify-scripts');
+  gulp.src(['./public/src/**/*.js'])
+    .pipe(babel(  { presets: ['es2015'] } ))
+    //.pipe(gulpif(globalConfig.production(),uglify()))
+    .pipe(gulp.dest('./public/assets/app'));
 });
-
 
 gulp.task('babelify-scripts', cb => {
   gulp.src(['./public/src/**/*.js'])
@@ -90,22 +86,6 @@ gulp.task('babelify-scripts', cb => {
     .pipe(gulpif(globalConfig.production(),uglify()))
     .pipe(gulp.dest('./public/assets/app'));
 });
-
-
-
-gulp.task('bundle', cb => {
-  gulp.src('./public/src/**/*.js')
-    .pipe(babel(  { presets: ['es2015'] } ))
-    .pipe(amdOptimize("musicapp"))
-    .pipe(concat('musicapp.js'))
-    .pipe(gulpif(globalConfig.production(),uglify()))
-    .pipe(gulp.dest('./public/assets/app'));
-});
-
-gulp.task('clean-scripts', cb => {
-  rimraf('./public/assets/app', cb);
-});
-
 
 gulp.task('less', () => {
   gulp.src('./public/less/**/*.less')
@@ -131,7 +111,10 @@ gulp.task('less', () => {
 
 gulp.task('watch-fe', () =>{
   gulp.watch('./public/src/**/*.js', () => {
-    gulp.start('scripts');
+    gulp.src(['./public/src/**/*.js'])
+      .pipe(babel(  { presets: ['es2015'] } ))
+      //.pipe(gulpif(globalConfig.production(),uglify()))
+      .pipe(gulp.dest('./public/assets/app'));
   });
 
   gulp.watch('./public/less/**/*.less', () => {
@@ -143,11 +126,6 @@ gulp.task('watch-fe', () =>{
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Commands
 //////////////////////////////////////////////////////////////////////////////////////////////
-
-
-gulp.task('build-code', cb => {
-  run('bundle');
-})
 
 gulp.task('development', cb => {
   run('server', 'build', 'watch-be', 'watch-fe', 'scripts', 'less', cb);
