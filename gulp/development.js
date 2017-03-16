@@ -24,8 +24,13 @@ var gulpif = require('gulp-if');
 var amdOptimize = require('amd-optimize');
 var ignore = require('gulp-ignore');
 
-
 var globalConfig = require('./config');
+
+const babelify = require('babelify');
+const browserify = require('browserify')
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Vars setup
@@ -79,12 +84,28 @@ gulp.task('clean-scripts', function(cb){
   rimraf('./public/assets/app', cb);
 });
 
-gulp.task('traslate-scripts', function(){
+gulp.task('traslate-scripts-off', function(){
   console.log('traslate scripts');
   gulp.src('./public/src/**/*.js')
+    .pipe(plumber())
     .pipe(gulpif(globalConfig.production(),uglify()))
+    .pipe(babel(  { presets: ['es2015'] } ))
     .pipe(gulp.dest('./public/assets/app'));
 });
+
+
+gulp.task('traslate-scripts', function(){
+  console.log('traslate scripts');
+  browserify('./public/src/app.js')
+    .transform('babelify', {
+      presets: ['es2015']
+    })
+    .bundle()
+    .pipe(source('app.js'))
+    .pipe(buffer())
+    .pipe(gulp.dest('./public/assets/app'));
+});
+
 
 
 gulp.task('less', function(){

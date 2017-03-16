@@ -7,3 +7,5 @@ let linkComponent = () => {
     saysssss: () => { console.log(greeting) }
   }
 }
+
+export default linkComponent;
