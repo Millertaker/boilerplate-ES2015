@@ -40,12 +40,16 @@
     "gulp-shell": "^0.5.1",
     "gulp-uglify": "^2.0.0",
     "gulp-uglifycss": "^1.0.6",
+    "gulp-util": "^3.0.8",
     "gulp-watch": "^4.3.5",
     "less-plugin-autoprefix": "^1.5.1",
     "mocha": "^3.2.0",
     "npm": "^4.3.0",
     "require-dir": "^0.3.1",
     "rimraf": "^2.4.4",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
   }
 }

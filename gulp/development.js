@@ -24,6 +24,7 @@ var gulpif = require('gulp-if');
 var amdOptimize = require('amd-optimize');
 var ignore = require('gulp-ignore');
 
+
 var globalConfig = require('./config');
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,16 +75,17 @@ gulp.task('watch-be', function(){
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 gulp.task('clean-scripts', function(cb){
+  console.log('clean scripts');
   rimraf('./public/assets/app', cb);
 });
 
 gulp.task('traslate-scripts', function(){
-  gulp.src(['./public/src/**/*.js'])
-    .pipe(plumber())
-    .pipe(babel(  { presets: ['es2015'] } ))
+  console.log('traslate scripts');
+  gulp.src('./public/src/**/*.js')
     .pipe(gulpif(globalConfig.production(),uglify()))
     .pipe(gulp.dest('./public/assets/app'));
 });
+
 
 gulp.task('less', function(){
   gulp.src('./public/less/**/*.less')
@@ -108,9 +110,7 @@ gulp.task('less', function(){
 });
 
 gulp.task('watch-fe', function(){
-  gulp.watch('./public/src/**/*.js', function(){
-    gulp.start('traslate-scripts');
-  });
+  gulp.watch('./public/src/**/*.js', ['clean-scripts','traslate-scripts']);
   gulp.watch('./public/less/**/*.less', function(){
     gulp.start('less');
   });
@@ -121,6 +121,6 @@ gulp.task('watch-fe', function(){
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 gulp.task('development', function(cb){
-  run('server', 'build', 'watch-be', 'watch-fe', 'traslate-scripts', 'less', cb);
+  run('server', 'build', 'watch-be', 'watch-fe', 'clean-scripts', 'traslate-scripts', 'less', cb);
 });
 
