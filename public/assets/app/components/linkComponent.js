@@ -1,6 +1,13 @@
-"use strict";
+'use strict';
 
-(function () {
+/* Comppments Pulled */
 
-  function LinkComponent() {}
-})();
+var linkComponent = function linkComponent() {
+  var greeting = 'this is a link!';
+
+  return {
+    say: function say() {
+      console.log(greeting);
+    }
+  };
+};

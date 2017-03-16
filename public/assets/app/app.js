@@ -1,14 +1,18 @@
 'use strict';
 
-/* Comppments Pulled */
+var _linkComponent = require('.components/linkComponent');
 
-(function () {
+var _linkComponent2 = _interopRequireDefault(_linkComponent);
 
-  function App() {}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-  App.prototype.init = function () {
-    console.log('whats up!');
+var app = function app(linkComponent) {
+  var link1 = linkComponent();
+  var greeting = 'whats up vato!';
+
+  return {
+    sayHello: function sayHello() {
+      console.log(greeting);
+    }
   };
-
-  return new App();
-})().init();
+}; /* Comppments Pulled */

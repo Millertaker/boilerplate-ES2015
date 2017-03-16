@@ -1,14 +1,11 @@
 /* Comppments Pulled */
+import linkComponent from '.components/linkComponent';
 
-(function(){
+let app = (linkComponent) => {
+  let link1 = linkComponent();
+  const greeting = 'whats up vato!';
 
-  function App(){
+  return {
+    sayHello: () => { console.log(greeting) }
   }
-
-  App.prototype.init = function(){
-    console.log('whats up!');
-  };
-
-  return new App;
-})().init();
-
+}
