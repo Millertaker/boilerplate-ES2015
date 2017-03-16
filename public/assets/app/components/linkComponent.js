@@ -6,7 +6,7 @@ var linkComponent = function linkComponent() {
   var greeting = 'this is a link!';
 
   return {
-    say: function say() {
+    saysssss: function saysssss() {
       console.log(greeting);
     }
   };

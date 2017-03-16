@@ -1,6 +1,6 @@
 'use strict'
 
-import gulp from 'gulp';
+var gulp = require('gulp');
 
 let env = process.env.NODE_ENV || 'development';
 

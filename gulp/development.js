@@ -4,51 +4,51 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-import gulp from 'gulp';
-import shell from 'gulp-shell';
-import rimraf from 'rimraf';
-import gulpRimraf from 'gulp-rimraf';
-import run from 'run-sequence';
-import watch from 'gulp-watch';
-import server from 'gulp-live-server';
+var gulp = require('gulp');
+var shell = require('gulp-shell');
+var rimraf = require('rimraf');
+var gulpRimraf = require('gulp-rimraf');
+var run = require('run-sequence');
+var watch = require('gulp-watch');
+var server = require('gulp-live-server');
 
-import uglify from 'gulp-uglify';
-import babel from 'gulp-babel';
-import rename from 'gulp-rename';
-import less from 'gulp-less';
-import concat from 'gulp-concat';
-import uglifycss from 'gulp-uglifycss';
-import plumber from 'gulp-plumber';
-import LessPluginAutoPrefix from 'less-plugin-autoprefix';
-import gulpif from 'gulp-if';
-import amdOptimize from 'amd-optimize';
-import ignore from 'gulp-ignore';
+var uglify = require('gulp-uglify');
+var babel = require('gulp-babel');
+var rename = require('gulp-rename');
+var less = require('gulp-less');
+var concat = require('gulp-concat');
+var uglifycss = require('gulp-uglifycss');
+var plumber = require('gulp-plumber');
+var LessPluginAutoPrefix = require('less-plugin-autoprefix');
+var gulpif = require('gulp-if');
+var amdOptimize = require('amd-optimize');
+var ignore = require('gulp-ignore');
 
-import globalConfig from './config';
+var globalConfig = require('./config');
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Vars setup
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-let autoprefix = new LessPluginAutoPrefix({browsers: ["last 2 versions"]});
-let express;
+var autoprefix = new LessPluginAutoPrefix({browsers: ["last 2 versions"]});
+var express;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // BE task
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-gulp.task('server', () => {
+gulp.task('server', function(){
   express = server.new('./server/build');
   express.start.bind(express);
 });
 
-gulp.task('build', cb => {
+gulp.task('build', function(cb){
   run('clean', 'babel', 'restart', cb);
 });
 
-gulp.task('clean', cb => {
+gulp.task('clean', function(cb){
   rimraf('./server/build', cb);
 });
 
@@ -57,13 +57,13 @@ gulp.task('babel', shell.task([
   ])
 );
 
-gulp.task('restart', () => {
+gulp.task('restart', function(){
   express.start.bind(express)();
 });
 
 
-gulp.task('watch-be', () => {
-  gulp.watch('./server/src/**/*.js', () => {
+gulp.task('watch-be', function(){
+  gulp.watch('./server/src/**/*.js', function(){
     gulp.start('build');
   });
 })
@@ -73,21 +73,19 @@ gulp.task('watch-be', () => {
 // FE task
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-gulp.task('scripts', cb => {
-  gulp.src(['./public/src/**/*.js'])
-    .pipe(babel(  { presets: ['es2015'] } ))
-    //.pipe(gulpif(globalConfig.production(),uglify()))
-    .pipe(gulp.dest('./public/assets/app'));
+gulp.task('clean-scripts', function(cb){
+  rimraf('./public/assets/app', cb);
 });
 
-gulp.task('babelify-scripts', cb => {
+gulp.task('traslate-scripts', function(){
   gulp.src(['./public/src/**/*.js'])
+    .pipe(plumber())
     .pipe(babel(  { presets: ['es2015'] } ))
     .pipe(gulpif(globalConfig.production(),uglify()))
     .pipe(gulp.dest('./public/assets/app'));
 });
 
-gulp.task('less', () => {
+gulp.task('less', function(){
   gulp.src('./public/less/**/*.less')
     .pipe(plumber())
     .pipe(less({
@@ -109,25 +107,20 @@ gulp.task('less', () => {
     .pipe(gulp.dest('./public/assets/css'));
 });
 
-gulp.task('watch-fe', () =>{
-  gulp.watch('./public/src/**/*.js', () => {
-    gulp.src(['./public/src/**/*.js'])
-      .pipe(babel(  { presets: ['es2015'] } ))
-      //.pipe(gulpif(globalConfig.production(),uglify()))
-      .pipe(gulp.dest('./public/assets/app'));
+gulp.task('watch-fe', function(){
+  gulp.watch('./public/src/**/*.js', function(){
+    gulp.start('traslate-scripts');
   });
-
-  gulp.watch('./public/less/**/*.less', () => {
+  gulp.watch('./public/less/**/*.less', function(){
     gulp.start('less');
   });
 });
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Commands
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-gulp.task('development', cb => {
-  run('server', 'build', 'watch-be', 'watch-fe', 'scripts', 'less', cb);
+gulp.task('development', function(cb){
+  run('server', 'build', 'watch-be', 'watch-fe', 'traslate-scripts', 'less', cb);
 });
 

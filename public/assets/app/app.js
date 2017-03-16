@@ -1,6 +1,6 @@
 'use strict';
 
-var _linkComponent = require('.components/linkComponent');
+var _linkComponent = require('components/linkComponent');
 
 var _linkComponent2 = _interopRequireDefault(_linkComponent);
 
@@ -11,7 +11,7 @@ var app = function app(linkComponent) {
   var greeting = 'whats up vato!';
 
   return {
-    sayHello: function sayHello() {
+    sayHellosss: function sayHellosss() {
       console.log(greeting);
     }
   };

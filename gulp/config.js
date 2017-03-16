@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   environment: 'development',
   development () {
     return this.environment === 'development';
