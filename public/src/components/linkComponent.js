@@ -1,11 +1,13 @@
-/* Comppments Pulled */
-
-let linkComponent = () => {
-  const greeting = 'this is a link!';
+let linkComponent = (linkAdress, linkText) => {
+  let text = linkText;
+  let address = linkAdress;
 
   return {
-    saysssss: () => { console.log(greeting) }
-  }
+    draw: () => { '<a href="{address}">{greeting}</a>' }
+  };
 }
 
 export default linkComponent;
+
+
+
